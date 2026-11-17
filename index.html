@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kuis Personil BK di Sekolah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            --bg: #FCF0DD;
+            --card: #FFFFFF;
+            --ink: #2B2B2B;
+            --muted: #7A6556;
+            --accent: #C8632A;
+            --accent-ink: #FFFFFF;
+            --floor: #F9D985;
+            --ok: #2E8B57;
+            --bad: #C0392B;
+            --o1: #F4C7A8;
+            --o2: #F9DD85;
+            --o3: #BFD6CE;
+            --o4: #F2B8C0;
+            --shadow: rgba(120, 70, 30, .22);
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #1E1712;
+                --card: #2C221B;
+                --ink: #F6EBDD;
+                --muted: #CDB7A3;
+                --accent: #E8894F;
+                --accent-ink: #1E1712;
+                --floor: #3A2E1E;
+                --ok: #5CCB8A;
+                --bad: #FF7B6B;
+                --o1: #6B3A1F;
+                --o2: #6B5A1A;
+                --o3: #2F4A43;
+                --o4: #6B2F3A;
+                --shadow: rgba(0, 0, 0, .5);
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #1E1712;
+            --card: #2C221B;
+            --ink: #F6EBDD;
+            --muted: #CDB7A3;
+            --accent: #E8894F;
+            --accent-ink: #1E1712;
+            --floor: #3A2E1E;
+            --ok: #5CCB8A;
+            --bad: #FF7B6B;
+            --o1: #6B3A1F;
+            --o2: #6B5A1A;
+            --o3: #2F4A43;
+            --o4: #6B2F3A;
+            --shadow: rgba(0, 0, 0, .5);
+            color-scheme: dark;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Nunito', 'Trebuchet MS', Arial, sans-serif;
+            font-weight: 600;
+            background-image: linear-gradient(to top, var(--floor) 0, var(--floor) 90px, transparent 90px);
+            background-attachment: fixed
+        }
+
+        h1,
+        h2,
+        .display {
+            font-family: 'Baloo 2', 'Trebuchet MS', Arial, sans-serif;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.1
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 28px;
+            padding: clamp(20px, 4vw, 44px);
+            box-shadow: 0 8px 0 var(--shadow)
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            border: 0;
+            color: inherit
+        }
+
+        button:focus-visible {
+            outline: 4px solid var(--accent);
+            outline-offset: 3px
+        }
+
+        .btn {
+            background: var(--accent);
+            color: var(--accent-ink);
+            font-family: 'Baloo 2', Arial, sans-serif;
+            font-weight: 800;
+            font-size: clamp(20px, 3vw, 28px);
+            padding: 12px 34px;
+            border-radius: 999px;
+            box-shadow: 0 6px 0 var(--shadow);
+            transition: transform .08s
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 var(--shadow)
+        }
+
+        .center {
+            text-align: center
+        }
+
+        .start h1 {
+            font-size: clamp(38px, 8vw, 84px);
+            color: var(--accent)
+        }
+
+        .start p {
+            font-size: clamp(17px, 2.4vw, 24px);
+            color: var(--muted);
+            margin: 14px auto 28px;
+            max-width: 34ch
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 22px
+        }
+
+        .badge-row span {
+            width: clamp(48px, 8vw, 76px);
+            height: clamp(48px, 8vw, 76px);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-family: 'Baloo 2', Arial, sans-serif;
+            font-weight: 800;
+            font-size: clamp(24px, 4vw, 38px);
+            color: var(--ink)
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            flex-wrap: wrap
+        }
+
+        .pill {
+            background: var(--card);
+            border-radius: 999px;
+            padding: 6px 18px;
+            font-weight: 800;
+            font-size: clamp(16px, 2vw, 20px);
+            box-shadow: 0 4px 0 var(--shadow)
+        }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+            flex: 1;
+            min-width: 140px
+        }
+
+        .dots i {
+            flex: 1;
+            height: 10px;
+            border-radius: 5px;
+            background: var(--shadow)
+        }
+
+        .dots i.done {
+            background: var(--accent)
+        }
+
+        .dots i.now {
+            background: var(--ink)
+        }
+
+        .timer {
+            height: 14px;
+            border-radius: 7px;
+            background: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 18px
+        }
+
+        .timer b {
+            display: block;
+            height: 100%;
+            width: 100%;
+            background: var(--ok);
+            transform-origin: left;
+            transition: background .3s
+        }
+
+        .q {
+            font-size: clamp(26px, 4.6vw, 50px);
+            margin-bottom: 26px
+        }
+
+        .opts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        @media (max-width:700px) {
+            .opts {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .opt {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+            padding: clamp(14px, 2.4vw, 24px);
+            border-radius: 22px;
+            font-size: clamp(18px, 2.6vw, 28px);
+            font-weight: 800;
+            color: var(--ink);
+            box-shadow: 0 6px 0 var(--shadow);
+            border: 4px solid transparent;
+            transition: transform .08s, opacity .2s
+        }
+
+        .opt:hover:not(:disabled) {
+            transform: translateY(-3px)
+        }
+
+        .opt:disabled {
+            cursor: default
+        }
+
+        .opt .L {
+            flex: none;
+            width: clamp(40px, 5vw, 56px);
+            height: clamp(40px, 5vw, 56px);
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--accent-ink);
+            display: grid;
+            place-items: center;
+            font-family: 'Baloo 2', Arial, sans-serif;
+            font-size: clamp(22px, 3vw, 30px)
+        }
+
+        .opt:nth-child(1) {
+            background: var(--o1)
+        }
+
+        .opt:nth-child(2) {
+            background: var(--o2)
+        }
+
+        .opt:nth-child(3) {
+            background: var(--o3)
+        }
+
+        .opt:nth-child(4) {
+            background: var(--o4)
+        }
+
+        .opt.ok {
+            border-color: var(--ok)
+        }
+
+        .opt.bad {
+            border-color: var(--bad)
+        }
+
+        .opt.dim {
+            opacity: .45
+        }
+
+        .opt.ok .L {
+            background: var(--ok);
+            color: #fff
+        }
+
+        .opt.bad .L {
+            background: var(--bad);
+            color: #fff
+        }
+
+        .fb {
+            margin-top: 22px;
+            border-radius: 22px;
+            padding: clamp(14px, 2.4vw, 24px);
+            background: var(--bg);
+            display: none
+        }
+
+        .fb.show {
+            display: block
+        }
+
+        .fb h2 {
+            font-size: clamp(26px, 4vw, 40px)
+        }
+
+        .fb.good h2 {
+            color: var(--ok)
+        }
+
+        .fb.wrong h2 {
+            color: var(--bad)
+        }
+
+        .fb p {
+            margin: 8px 0 18px;
+            font-size: clamp(17px, 2.3vw, 24px);
+            line-height: 1.4
+        }
+
+        .score {
+            font-family: 'Baloo 2', Arial, sans-serif;
+            font-weight: 800;
+            font-size: clamp(70px, 16vw, 170px);
+            line-height: 1;
+            color: var(--accent)
+        }
+
+        .end h2 {
+            font-size: clamp(28px, 5vw, 52px);
+            margin-bottom: 10px
+        }
+
+        .end p {
+            font-size: clamp(17px, 2.4vw, 24px);
+            color: var(--muted);
+            margin: 6px auto 26px;
+            max-width: 36ch
+        }
+
+        .conf {
+            position: fixed;
+            top: -20px;
+            width: 12px;
+            height: 18px;
+            border-radius: 3px;
+            pointer-events: none;
+            animation: fall linear forwards
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: .9
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .conf {
+                display: none
+            }
+
+            .opt,
+            .btn {
+                transition: none
+            }
+        }
+
+        .hint {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 16px;
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <main id="app"></main>
+    <script>
+        var Q = [
+            {q: "Apa yang dimaksud dengan personil BK di sekolah?", o: ["Pihak-pihak yang terlibat dalam penyelenggaraan layanan BK", "Siswa yang sering bermasalah", "Petugas kebersihan sekolah", "Panitia ujian sekolah"], a: 0, e: "Personil BK adalah pihak-pihak yang terlibat dalam penyelenggaraan layanan bimbingan dan konseling di sekolah."},
+            {q: "Siapa pelaksana utama layanan bimbingan dan konseling di sekolah?", o: ["Petugas perpustakaan", "Guru BK", "Penjaga sekolah", "Guru olahraga"], a: 1, e: "Guru BK (konselor) adalah pendidik profesional yang ditugaskan khusus memberikan layanan BK."},
+            {q: "Mana yang BUKAN bidang layanan BK?", o: ["Pribadi", "Sosial", "Keuangan", "Karier"], a: 2, e: "Bidang layanan BK adalah pribadi, sosial, belajar, dan karier."},
+            {q: "Guru BK wajib menjaga apa terhadap data dan masalah siswa?", o: ["Kerahasiaan", "Harga", "Kecepatan", "Warna"], a: 0, e: "Menjaga kerahasiaan adalah salah satu tanggung jawab penting guru BK."},
+            {q: "Guru yang setiap hari mengajar bidang studi tertentu di kelas disebut...", o: ["Guru BK", "Wali kelas", "Kepala sekolah", "Guru mata pelajaran"], a: 3, e: "Guru mata pelajaran berinteraksi langsung dengan siswa di kelas, jadi mudah melihat perubahan perilaku siswa."},
+            {q: "Apa tugas guru mata pelajaran dalam layanan BK?", o: ["Mengamati dan melaporkan siswa yang bermasalah", "Menyusun program BK sekolah", "Menetapkan anggaran sekolah", "Memberi hukuman kepada siswa"], a: 0, e: "Guru mata pelajaran mengamati kesulitan belajar dan perilaku siswa, lalu menyampaikannya kepada guru BK."},
+            {q: "Wali kelas adalah guru yang bertanggung jawab membina...", o: ["Seluruh sekolah", "Satu kelas tertentu", "Hanya siswa baru", "Hanya siswa berprestasi"], a: 1, e: "Wali kelas membina satu kelas tertentu, sehingga paling mengenal kondisi siswanya."},
+            {q: "Menyerahkan siswa yang masalahnya berat kepada guru BK disebut...", o: ["Asesmen", "Evaluasi", "Presensi", "Referal (alih tangan kasus)"], a: 3, e: "Wali kelas melakukan referal atau alih tangan kasus kepada guru BK bila masalah tidak bisa diselesaikan sendiri."},
+            {q: "Siswa sering membolos. Langkah awal guru BK yang tepat adalah...", o: ["Langsung mengeluarkan siswa dari sekolah", "Mengumumkan namanya di depan kelas", "Memanggil siswa dan menggali penyebabnya lewat konseling", "Mengabaikan sampai ujian"], a: 2, e: "Guru BK menggali penyebab melalui konseling, lalu bekerja sama dengan wali kelas dan orang tua."},
+            {q: "Setelah guru mata pelajaran melaporkan masalah siswa, wali kelas biasanya...", o: ["Menghimpun data dan menghubungi orang tua", "Menutup kasus", "Memindahkan siswa ke kelas lain", "Menunggu tanpa berbuat apa-apa"], a: 0, e: "Wali kelas menghimpun data dan menjalin komunikasi dengan orang tua, lalu guru BK memberi layanan dan semua mengevaluasi bersama."}
+        ];
+        var app = document.getElementById('app'), i = 0, score = 0, locked = false, tick = null, T = 20, left = T;
+        var L = ['A', 'B', 'C', 'D'];
+        function el(h) {app.innerHTML = h}
+        function start() {
+            i = 0; score = 0;
+            el('<div class="card start center"><div class="badge-row"><span style="background:var(--o1)">B</span><span style="background:var(--o2)">K</span><span style="background:var(--o3)">?</span><span style="background:var(--o4)">!</span></div>' +
+                '<h1>Kuis Personil BK</h1><p>' + Q.length + ' soal tentang guru BK, guru mata pelajaran, dan wali kelas. Jawab sebelum waktu habis!</p>' +
+                '<button class="btn" id="go">Mulai kuis</button><div class="hint">Tekan A, B, C, atau D di keyboard untuk menjawab</div></div>');
+            document.getElementById('go').onclick = show;
+        }
+        function show() {
+            locked = false; clearInterval(tick); left = T;
+            var d = Q[i], dots = '';
+            for (var k = 0; k < Q.length; k++)dots += '<i class="' + (k < i ? 'done' : k === i ? 'now' : '') + '"></i>';
+            var o = ''; d.o.forEach(function (t, k) {o += '<button class="opt" data-k="' + k + '"><span class="L">' + L[k] + '</span><span>' + t + '</span></button>'});
+            el('<div class="top"><span class="pill">Soal ' + (i + 1) + ' dari ' + Q.length + '</span><div class="dots">' + dots + '</div><span class="pill" id="sc">Skor ' + score + '</span><span class="pill" id="tm">' + left + '</span></div>' +
+                '<div class="timer"><b id="bar"></b></div><div class="card"><h2 class="q">' + d.q + '</h2><div class="opts">' + o + '</div>' +
+                '<div class="fb" id="fb"><h2 id="fh"></h2><p id="fp"></p><button class="btn" id="nx">' + (i === Q.length - 1 ? 'Lihat hasil' : 'Soal berikutnya') + '</button></div></div>');
+            document.querySelectorAll('.opt').forEach(function (b) {b.onclick = function () {answer(+b.dataset.k)}});
+            document.getElementById('nx').onclick = next;
+            tick = setInterval(function () {
+                left--; document.getElementById('tm').textContent = left;
+                var bar = document.getElementById('bar'); bar.style.transform = 'scaleX(' + (left / T) + ')';
+                if (left <= 6) bar.style.background = 'var(--bad)';
+                if (left <= 0) answer(-1);
+            }, 1000);
+        }
+        function answer(k) {
+            if (locked) return; locked = true; clearInterval(tick);
+            var d = Q[i], ok = k === d.a; if (ok) score++;
+            document.querySelectorAll('.opt').forEach(function (b, n) {
+                b.disabled = true;
+                if (n === d.a) {b.classList.add('ok'); b.querySelector('.L').textContent = '✓'}
+                else if (n === k) {b.classList.add('bad'); b.querySelector('.L').textContent = '✗'}
+                else b.classList.add('dim');
+            });
+            var fb = document.getElementById('fb'); fb.className = 'fb show ' + (ok ? 'good' : 'wrong');
+            document.getElementById('fh').textContent = k === -1 ? 'Waktu habis!' : ok ? 'Mantap, benar!' : 'Belum tepat';
+            document.getElementById('fp').textContent = d.e;
+            document.getElementById('sc').textContent = 'Skor ' + score;
+            if (ok) burst(18);
+            document.getElementById('nx').focus();
+        }
+        function next() {i++; if (i < Q.length) show(); else finish()}
+        function finish() {
+            var p = score / Q.length, t, m;
+            if (p >= .9) {t = 'Luar biasa!'; m = 'Kamu paham betul peran personil BK di sekolah.'}
+            else if (p >= .7) {t = 'Hebat!'; m = 'Pemahamanmu sudah sangat baik. Sedikit lagi sempurna.'}
+            else if (p >= .5) {t = 'Lumayan!'; m = 'Coba baca lagi materinya, lalu main sekali lagi.'}
+            else {t = 'Ayo semangat!'; m = 'Pelajari lagi peran tiap personil BK, kamu pasti bisa.'}
+            el('<div class="card end center"><h2>' + t + '</h2><div class="score">' + score + '/' + Q.length + '</div><p>' + m + '</p><button class="btn" id="again">Main lagi</button></div>');
+            document.getElementById('again').onclick = start;
+            if (p >= .5) burst(60);
+        }
+        function burst(n) {
+            var c = ['#C8632A', '#F9D985', '#6B7F7A', '#DFA085', '#2E8B57'];
+            for (var k = 0; k < n; k++) {
+                var s = document.createElement('div'); s.className = 'conf';
+                s.style.left = Math.random() * 100 + 'vw'; s.style.background = c[k % c.length];
+                s.style.animationDuration = (1.8 + Math.random() * 1.8) + 's'; s.style.animationDelay = Math.random() * .4 + 's';
+                document.body.appendChild(s); setTimeout(function (x) {x.remove()}, 4500, s);
+            }
+        }
+        document.addEventListener('keydown', function (e) {
+            var k = 'abcd'.indexOf(e.key.toLowerCase());
+            if (k > -1 && document.querySelector('.opt')) answer(k);
+        });
+        start();
+    </script>
+</body>
+
+</html>
